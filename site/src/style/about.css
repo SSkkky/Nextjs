@@ -1,0 +1,22 @@
+/* style > about.css */
+h1{text-align: center;}
+
+.about-ly{
+    width:60%; margin:100px auto;
+    text-align: center;
+}
+.about-ly > nav a{
+    padding:20px;
+    display: inline-block;
+}
+.about-ly .container{
+    border:1px solid black;
+    padding:40px;
+}
+
+.notpage{
+    font-size: 2rem;
+    color:red;
+    padding:60px;
+    text-align: center;
+}
