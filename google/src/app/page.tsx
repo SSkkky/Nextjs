@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "./page.module.css";
+import Image from 'next/image'
 import React, {useState } from 'react';
 import axios from 'axios';
 import {googleSearchItem} from '@/app/types/datatype';
@@ -34,7 +35,15 @@ export default function Home() {
       {results && (
         <ul>
           {results.map((item:googleSearchItem) => (
-            <li key={item.link}>
+            <li key={item.link} style={{marginBottom: "2rem"}}>
+              {item.pagemap?.cse_thumbnail && (
+              <Image
+  src={item.pagemap.cse_thumbnail[0].src}
+  alt='썸네일'
+  width={parseFloat(item.pagemap.cse_thumbnail[0].width)}
+  height={parseFloat(item.pagemap.cse_thumbnail[0].height)}
+/>)}
+              <h3>{item.title}</h3>
               <a href={item.link}>{item.title}</a>
             </li>
           ))}
