@@ -36,6 +36,7 @@ export default function Home() {
         <ul>
           {results.map((item:googleSearchItem) => (
             <li key={item.link} style={{marginBottom: "2rem"}}>
+              <a href={item.link}>
               {item.pagemap?.cse_thumbnail && (
               <Image
   src={item.pagemap.cse_thumbnail[0].src}
@@ -44,7 +45,8 @@ export default function Home() {
   height={parseFloat(item.pagemap.cse_thumbnail[0].height)}
 />)}
               <h3>{item.title}</h3>
-              <a href={item.link}>{item.title}</a>
+              <p>{item.snippet}</p>
+              </a>
             </li>
           ))}
         </ul>
