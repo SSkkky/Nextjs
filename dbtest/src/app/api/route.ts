@@ -1,13 +1,16 @@
 //src/app/api/route.ts
-import {connectToDB} from '@/lib/mongodb';
-import { NextApiRequest, NextApiResponse } from 'next';
-import {myProjectPostType} from '@/types/datatype';
+import { connectToDB } from '@/lib/mongodb';
+import { myProjectPostType } from '@/types/datatype';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
     const data = await connectToDB('get', 0);
-    return Response.json(data)
+    return NextResponse.json(data)
 }
 
-export async function POST(req: NextApiRequest, res: NextApiResponse){ 
-    return res.json(await connectToDB('post', await req.body));
+export async function POST(req: NextRequest) {
+
+    const data = await req.json()
+    console.log("data :", data)
+    return NextResponse.json(await connectToDB('post', data));
 }

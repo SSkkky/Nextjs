@@ -1,16 +1,16 @@
 //src/app/api/route.ts
-import {connectToDB} from '@/lib/mongodb';
-import {myProjectPostType} from '@/types/datatype';
+import { connectToDB } from '@/lib/mongodb';
+import { myProjectPostType } from '@/types/datatype';
 
 export async function GET() {
-    const data = await connectToDB('get',0);
+    const data = await connectToDB('get', 0);
     return Response.json(data)
 }
 
-export async function DELETE(req: any, {params}:any){ 
+export async function DELETE(req: any, { params }: any) {
     console.log(req, 'req!!!!!!!!!!!!!!')
     console.log(params, 'req!!!!!!!!!!!!!!')
-    const data = await connectToDB('delete',{postId:Number(params.postId)});
+    const data = await connectToDB('delete', { postId: Number(params.postId) });
     return Response.json(data);
 }
 
