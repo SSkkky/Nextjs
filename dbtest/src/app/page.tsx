@@ -8,14 +8,10 @@ import { myProjectPostType } from '@/types/datatype';
 export default function Home() {
   const [result, setResult] = useState([]);
   const [postData, setPostData] = useState<myProjectPostType | null>(null);
-  const [inputValue, setInputValue] = useState('');
-  const [itemIdx, setItemIdx] = useState<number>(0);
-
-  const elRef = useRef<HTMLInputElement>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   async function dataCrl(type: string, idx?: number) {
     let res: AxiosResponse | null = null;
-
 
     switch (type) {
       case 'all':
@@ -28,7 +24,7 @@ export default function Home() {
         res = await axios.delete(`/api/${idx}`);
         break;
       case 'put':
-        res = await axios.put(`/api/${idx}`, { id: idx, title: inputValue });
+        res = await axios.put(`/api/${idx}`, postData);
         break;
     }
 
@@ -38,18 +34,21 @@ export default function Home() {
     }
   }
 
-  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  useEffect(() => {
+    dataCrl('all')
+  }, [])
 
+  // useEffect(() => {
+  //   if (submitting && postData !== null) {
+  //     dataCrl('insert');
+  //     setSubmitting(false);
+  //   }
+  // }, [postData, submitting]);
+
+  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const formdata = new FormData(e.currentTarget);
     let writeData: any = Object.fromEntries(formdata.entries());
-
-    // 값이 File 타입인 경우를 대비하여 string으로 변환
-    for (let key in writeData) {
-      if (typeof writeData[key] === 'object' && writeData[key] instanceof File) {
-        writeData[key] = writeData[key].name;
-      }
-    }
 
     const newData: myProjectPostType = {
       postId: Date.now(),
@@ -61,13 +60,10 @@ export default function Home() {
       comments: []
     };
 
-    setPostData(newData);
+    await setPostData(newData);
+    setSubmitting(true);
     dataCrl('insert');
   }
-
-  useEffect(() => {
-    dataCrl('all')
-  }, [])
 
   return (
     <>
@@ -77,8 +73,8 @@ export default function Home() {
 
       <br></br>
       <form onSubmit={(e) => { onSubmitHandler(e) }} style={{ marginBottom: '30' }}>
-        <p>작성자 : <input name="authorId" placeholder="작성자를 입력해주세용" /></p>
-        <p>제목 : <input name="title" placeholder="제목을 입력해주세용" /></p>
+        <p>작성자 : <input type="text" name="authorId" placeholder="작성자를 입력해주세용" /></p>
+        <p>제목 : <input type="text" name="title" placeholder="제목을 입력해주세용" /></p>
         <p>내용 : <textarea name="content" placeholder="내용을 입력해주세요!!!" /></p>
         <button>작성</button>
       </form>
