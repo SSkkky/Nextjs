@@ -22,24 +22,7 @@ export default function Home() {
         res = await axios.get('/api');
         break;
       case 'insert':
-        const datas = {
-          postId: "Fadfasfdafdafaasd",
-          title: "dafasdfa",
-          content: "Fafdaaf",
-          authorId: "123455676",
-          token: "token",
-          date: "dsasfdasffdfdsasfd",
-          comments: ""
-        }
-
-        console.log("type :", type, " body :", datas)
-        await axios.post('/api', datas).then(
-          result => {
-            console.log("result :", result)
-          }
-        ).catch(err => {
-          console.log("err :", err)
-        });
+        res = await axios.post('/api', postData);
         break;
       case 'delete':
         res = await axios.delete(`/api/${idx}`);
@@ -49,13 +32,13 @@ export default function Home() {
         break;
     }
 
-    // if (res !== null) {
-    //   console.log(res.data);
-    //   setResult(res.data);
-    // }
+    if (res !== null) {
+      console.log(res.data);
+      setResult(res.data);
+    }
   }
 
-  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formdata = new FormData(e.currentTarget);
@@ -78,13 +61,13 @@ export default function Home() {
       comments: []
     };
 
-    await setPostData(newData);
+    setPostData(newData);
     dataCrl('insert');
   }
 
   useEffect(() => {
     dataCrl('all')
-  }, [postData])
+  }, [])
 
   return (
     <>

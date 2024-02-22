@@ -2,7 +2,7 @@
 import { myProjectPostType } from '@/types/datatype'
 
 const { MongoClient } = require('mongodb');
-const uri = "mongodb+srv://sky:vbHcM2rClT1crAks@cluster0.nah7cdq.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://sky:vbHcM2rClT1crAks@cluster0.nah7cdq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri);
 
 export const connectToDB = async (type: string, body: any) => {
